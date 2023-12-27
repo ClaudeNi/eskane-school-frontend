@@ -1,0 +1,21 @@
+.Classes {
+    text-align: center;
+}
+
+.ClassItem {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 300px;
+    padding: 1%;
+    margin: 1%;
+    border: 1px #000 solid;
+}
+
+.UserStack {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    border: #000 solid 1px;
+    padding: 1%;
+    margin: 1%;
+}

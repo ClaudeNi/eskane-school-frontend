@@ -1,0 +1,24 @@
+.signup-main {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-title {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input {
+    max-width: 500px;
+    margin: 10px;
+}
+
+.signup-login {
+    display: flex;
+    justify-content: center;
+}
