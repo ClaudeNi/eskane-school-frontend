@@ -9,7 +9,7 @@ function SignUpPage() {
 		lastName: "",
 		email: "",
 		phoneNumber: "",
-		role: "",
+		role: "student",
 		password: "",
 	});
 
@@ -65,7 +65,7 @@ function SignUpPage() {
 				></input>
 				<div>
 					<label>Role: </label>
-					<select onChange={handleChange}>
+					<select name="role" onChange={handleChange}>
 						<option value={"Student"}>Student</option>
 						<option value={"Teacher"}>Teacher</option>
 					</select>
