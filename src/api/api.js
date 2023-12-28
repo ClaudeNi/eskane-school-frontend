@@ -5,7 +5,7 @@ env.config();
 let url;
 
 if (process.env.NODE_ENV === "production") {
-	url = process.env.URL;
+	url = process.env.APIURL;
 }
 if (process.env.NODE_ENV === "development") {
 	url = "http://localhost:8000/api";
