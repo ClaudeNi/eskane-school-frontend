@@ -1,7 +1,6 @@
 import axios from "axios";
-import env from "dotenv";
+import env from "react-dotenv";
 
-env.config();
 let url;
 
 if (process.env.NODE_ENV === "production") {
