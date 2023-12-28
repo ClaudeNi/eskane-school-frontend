@@ -1,9 +1,11 @@
 import axios from "axios";
+import env from "dotenv";
 
+env.config();
 let url;
 
 if (process.env.NODE_ENV === "production") {
-	url = "api";
+	url = process.env.URL;
 }
 if (process.env.NODE_ENV === "development") {
 	url = "http://localhost:8000/api";
