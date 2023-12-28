@@ -4,7 +4,7 @@ import env from "react-dotenv";
 let url;
 
 if (process.env.NODE_ENV === "production") {
-	url = process.env.APIURL;
+	url = env.APIURL;
 }
 if (process.env.NODE_ENV === "development") {
 	url = "http://localhost:8000/api";
