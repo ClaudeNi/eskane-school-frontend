@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import myAPI from "../../api/api";
 import "./Profile.css";
 
@@ -16,7 +15,6 @@ function ProfilePage() {
 
 	const grabData = async () => {
 		try {
-			// const url = `http://localhost:8000/api/users/${userID}`;
 			const { data: res } = await myAPI.get(`/users/${userID}`);
 			console.log(res.data);
 			setData(res.data);
@@ -32,8 +30,7 @@ function ProfilePage() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = `http://localhost:8000/api/users/${userID}`;
-			const { data: res } = await axios.patch(url, data);
+			const { data: res } = await myAPI.patch(`/users/${userID}`, data);
 			console.log(res);
 		} catch (e) {
 			console.log(e);

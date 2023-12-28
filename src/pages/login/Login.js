@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import myAPI from "../../api/api";
 import "./Login.css";
 
 const LoginPage = () => {
@@ -25,8 +25,7 @@ const LoginPage = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8000/api/users/login";
-			const { data: res } = await axios.post(url, data);
+			const { data: res } = await myAPI.post("/users/login", data);
 			localStorage.setItem("token", res.data);
 			localStorage.setItem("id", res.id);
 			navigate("/classes");

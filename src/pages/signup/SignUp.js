@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import myAPI from "../../api/api";
 import "./SignUp.css";
 
 function SignUpPage() {
@@ -22,8 +22,7 @@ function SignUpPage() {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8000/api/users";
-			const { data: res } = await axios.post(url, data);
+			const { data: res } = await myAPI.post("/users", data);
 			navigate("/");
 			console.log(res);
 		} catch (e) {
