@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import myAPI from "../../api/api";
 import "./Login.css";
+import Spinner from "../../components/spinner/spinner";
 
 const LoginPage = () => {
 	const [data, setData] = useState({
 		email: "",
 		password: "",
 	});
+	const [spinner, setSpinner] = useState(false);
 
 	const navigate = useNavigate();
 	const userToken = localStorage.getItem("token");
@@ -24,16 +26,21 @@ const LoginPage = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setSpinner(true);
 		try {
 			const { data: res } = await myAPI.post("/users/login", data);
 			localStorage.setItem("token", res.data);
 			localStorage.setItem("id", res.id);
+			setSpinner(false);
 			navigate("/classes");
-			console.log(res);
 		} catch (e) {
 			console.log(e);
 		}
 	};
+
+	if (spinner) {
+		return <Spinner />;
+	}
 
 	return (
 		<div className="login-main">

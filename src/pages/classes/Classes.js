@@ -2,16 +2,22 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import myAPI from "../../api/api";
 import "./Classes.css";
+import Spinner from "../../components/spinner/spinner";
+import ErrorPage from "../error/Error";
 
 function ClassesPage() {
 	const [classesData, setClassesData] = useState([]);
 	const [newClassName, setNewClassName] = useState("");
+	const [spinner, setSpinner] = useState(true);
 
 	useEffect(() => {
-		grabClassesData();
+		if (token) {
+			grabClassesData();
+		}
 		// eslint-disable-next-line
 	}, []);
 
+	const token = localStorage.getItem("token");
 	const userID = localStorage.getItem("id");
 	const navigate = useNavigate();
 
@@ -19,6 +25,7 @@ function ClassesPage() {
 		try {
 			const { data: res } = await myAPI.get(`/classes/${userID}`);
 			setClassesData(res.data);
+			setSpinner(false);
 		} catch (e) {
 			console.log(e);
 		}
@@ -27,7 +34,10 @@ function ClassesPage() {
 	const displayClasses = () => {
 		return classesData.map((classData) => {
 			return (
-				<Link key={classData._id} to={`/classes/${classData._id}`}>
+				<Link
+					key={classData._id}
+					to={`/classes/class/${classData._id}`}
+				>
 					<div className="ClassItem">Name: {classData.name}</div>
 				</Link>
 			);
@@ -46,6 +56,7 @@ function ClassesPage() {
 
 	const handleCreateClass = async (e) => {
 		e.preventDefault();
+		setSpinner(true);
 		try {
 			const newClassData = {
 				name: newClassName,
@@ -54,12 +65,20 @@ function ClassesPage() {
 			};
 
 			const { data: res } = await myAPI.post("classes", newClassData);
+			setSpinner(false);
 			navigate(`/classes/${res.classID}`);
-			console.log(res);
 		} catch (e) {
 			console.log(e);
 		}
 	};
+
+	if (!token) {
+		return <ErrorPage />;
+	}
+
+	if (spinner) {
+		return <Spinner />;
+	}
 
 	return (
 		<div>

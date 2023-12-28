@@ -15,7 +15,7 @@ function App() {
 			<Route path="/signup" exact Component={SignUpPage} />
 			<Route path="/forgotpassword" exact Component={ForgotPassPage} />
 			<Route path="/classes" exact Component={ClassesPage} />
-			<Route path="/classes/:classID" exact Component={ClassPage} />
+			<Route path="/classes/class/:classID" exact Component={ClassPage} />
 			<Route path="/profile/:userID" exact Component={ProfilePage} />
 			<Route path="*" Component={ErrorPage} />
 		</Routes>
