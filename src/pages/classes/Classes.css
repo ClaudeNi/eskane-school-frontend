@@ -4,11 +4,15 @@
 
 .ClassItem {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     max-width: 300px;
-    padding: 1%;
+    /* padding: 1%; */
     margin: 1%;
     border: 1px #000 solid;
+}
+
+.ClassItem div {
+    margin: 5%;
 }
 
 .UserStack {

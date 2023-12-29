@@ -6,7 +6,11 @@ import Spinner from "../../components/spinner/spinner";
 
 const ClassPage = () => {
 	const [usersData, setUsersData] = useState([]);
-	const [classData, setClassData] = useState({ students: [] });
+	const [classData, setClassData] = useState({
+		teacher: {},
+		students: [],
+	});
+	const [message, setMessage] = useState("");
 	const [spinner, setSpinner] = useState(false);
 
 	const { classID } = useParams();
@@ -30,18 +34,56 @@ const ClassPage = () => {
 	const grabClassData = async () => {
 		try {
 			const { data: res } = await myAPI.get(`/classes/class/${classID}`);
+			if (res.data.teacher === undefined) {
+				res.data.teacher = {};
+			}
 			setClassData(res.data);
 		} catch (e) {
 			console.log(e);
 		}
 	};
 
-	const handleAddToClass = async (id, firstName, lastName) => {
-		let newClassData = classData;
-		let newStudent = { id, firstName, lastName };
-		newClassData.students.push(newStudent);
-		await myAPI.patch(`/classes/class/${classID}`, newClassData);
-		setClassData(newClassData);
+	const handleAddToClass = async (id, firstName, lastName, role) => {
+		try {
+			let newClassData = classData;
+			if (role === "Student") {
+				let newStudent = { id, firstName, lastName, role };
+				newClassData.students.push(newStudent);
+			} else if (Object.keys(classData.teacher).length === 0) {
+				newClassData.teacher = {
+					id,
+					firstName,
+					lastName,
+				};
+			} else {
+				setMessage("This class already has a teacher.");
+			}
+			await myAPI.patch(`/classes/class/${classID}`, newClassData);
+			setClassData(newClassData);
+		} catch (e) {
+			console.log(e);
+		}
+	};
+
+	const handleRemoveFromClass = async (id, role) => {
+		try {
+			let newClassData = classData;
+			if (role === "Student") {
+				classData.students.forEach((student, i) => {
+					if (student.id === id) {
+						newClassData.students.splice(i, 1);
+					}
+				});
+			} else {
+				console.log(classData);
+				console.log(classData.teacher);
+				newClassData.teacher = {};
+			}
+			await myAPI.patch(`/classes/class/${classID}`, newClassData);
+			setClassData(newClassData);
+		} catch (e) {
+			console.log(e);
+		}
 	};
 
 	const displayUsers = () => {
@@ -59,7 +101,8 @@ const ClassPage = () => {
 								handleAddToClass(
 									userData._id,
 									userData.firstName,
-									userData.lastName
+									userData.lastName,
+									userData.role
 								);
 							}}
 						>
@@ -73,11 +116,47 @@ const ClassPage = () => {
 		});
 	};
 
+	const displayClassTeacher = () => {
+		if (Object.values(classData.teacher).length !== 0) {
+			return (
+				<div className="ClassItem">
+					<h4>Teacher</h4>
+					<div>
+						Name: {classData.teacher.firstName}{" "}
+						{classData.teacher.lastName}
+					</div>
+					<button
+						onClick={() => {
+							handleRemoveFromClass(
+								classData.teacher.id,
+								"Teacher"
+							);
+						}}
+					>
+						Remove Teacher!
+					</button>
+				</div>
+			);
+		} else {
+			return null;
+		}
+	};
+
 	const displayClassStudents = () => {
 		return classData.students.map((student, i) => {
 			return (
 				<div className="ClassItem" key={i}>
-					Name: {student.firstName} {student.lastName}
+					<div>
+						Name: {student.firstName} {student.lastName}
+					</div>
+					<div>Role: {student.role}</div>
+					<button
+						onClick={() => {
+							handleRemoveFromClass(student.id, "Student");
+						}}
+					>
+						Remove student!
+					</button>
 				</div>
 			);
 		});
@@ -90,6 +169,8 @@ const ClassPage = () => {
 	return (
 		<div>
 			{classID}
+			{message}
+			{displayClassTeacher()}
 			<div>{displayClassStudents()}</div>
 			<button onClick={grabUsesrData}>fetch all users</button>
 			<div>{displayUsers()}</div>

@@ -9,8 +9,9 @@ function SignUpPage() {
 		lastName: "",
 		email: "",
 		phoneNumber: "",
-		role: "student",
+		role: "Student",
 		password: "",
+		classes: [],
 	});
 
 	const navigate = useNavigate();

@@ -34,12 +34,11 @@ function ClassesPage() {
 	const displayClasses = () => {
 		return classesData.map((classData) => {
 			return (
-				<Link
-					key={classData._id}
-					to={`/classes/class/${classData._id}`}
-				>
-					<div className="ClassItem">Name: {classData.name}</div>
-				</Link>
+				<div key={classData._id} className="ClassItem">
+					<Link to={`/classes/class/${classData._id}`}>
+						<div>Name: {classData.name}</div>
+					</Link>
+				</div>
 			);
 		});
 	};
@@ -60,13 +59,13 @@ function ClassesPage() {
 		try {
 			const newClassData = {
 				name: newClassName,
-				teacher: userID,
+				teacher: {},
 				students: [],
 			};
 
 			const { data: res } = await myAPI.post("classes", newClassData);
 			setSpinner(false);
-			navigate(`/classes/${res.classID}`);
+			navigate(`/classes/class/${res.classID}`);
 		} catch (e) {
 			console.log(e);
 		}
