@@ -5,7 +5,7 @@ window.env = {
   "AZURE_STORAGE_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=ruralsensesfiles;AccountKey=Dv/fAjRy0miWvhWy/vF0oIL8HA7GoFyAyF5rTT+LUFi17mSY2IyiWfq0vvPuWJtNkHaf5SdkfmkKgSeUDEdt/Q==;EndpointSuffix=core.windows.net",
   "AZURE_TRANSLATOR_KEY": "7822077da9964e9391e2c13137d0e296",
   "AZURE_TRANSLATOR_URL": "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&to=en",
-  "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\crashpad_2244_DCGILHYFLOGJTYJY",
+  "CHROME_CRASHPAD_PIPE_NAME": "\\\\.\\pipe\\crashpad_13304_WDQZECDMBDXILFFZ",
   "COLOR": "1",
   "COLORTERM": "truecolor",
   "CommonProgramFiles": "C:\\Program Files\\Common Files",
